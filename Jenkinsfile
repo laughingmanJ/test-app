@@ -1,12 +1,11 @@
-pipeline{
-    agent {
-        docker { image 'node:14-alpine'}
-    }
-    stages{
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
+podTemplate(containers: [
+    containerTemplate(name: 'node', image: 'node:14-alpine', ttyEnabled: true, command: 'cat')
+  ]) {
+
+node(POD_LABEL) {
+    stage('Build') {
+        container('node'){
+            sh 'node --version'
         }
     }
 }
