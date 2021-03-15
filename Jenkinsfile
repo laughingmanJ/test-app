@@ -3,10 +3,16 @@ podTemplate(containers: [
   ]) {
 
     node(POD_LABEL) {
-        stage('Build') {
-            container('node'){
-                sh 'node --version'
+        try{
+            stage('Build') {
+                container('node'){
+                    sh 'node --version'
+                }
             }
+        }
+        catch(ex){
+            println "Failed"
+            throw(ex)
         }
     }
   }
